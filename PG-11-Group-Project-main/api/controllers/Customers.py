@@ -1,12 +1,12 @@
 from sqlalchemy.orm import Session
-from ..dependencies.database import Base
-from ..models import Customers as model
+from fastapi import HTTPException, status, Response, Depends
 from sqlalchemy.exc import SQLAlchemyError
 
 
 # Create Customer
+
 def create_customer(db: Session, name: str, email: str, phone_number: str, address: str):
-    new_customer = Customers(name=name, email=email, phone_number=phone_number, address=address)
+    new_customer = Customers()
     db.add(new_customer)
     db.commit()
     db.refresh(new_customer)
@@ -14,8 +14,13 @@ def create_customer(db: Session, name: str, email: str, phone_number: str, addre
 
 
 # Read Customer
+class Customer:
+    pass
+
+
 def read_customer(db: Session, customer_id: int):
     return db.query(Customer).filter(Customer.customer_id == customer_id).first()
+
 
 # Update Customer
 def update_customer(db: Session, customer_id: int, name: str, email: str, phone_number: str, address: str):
@@ -28,6 +33,7 @@ def update_customer(db: Session, customer_id: int, name: str, email: str, phone_
         db.commit()
         db.refresh(customer)
         return customer
+
 
 # Delete Customer
 def delete_customer(db: Session, customer_id: int):
