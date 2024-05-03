@@ -3,6 +3,8 @@ from fastapi import HTTPException, status, Response, Depends
 from sqlalchemy.exc import SQLAlchemyError
 
 
+
+
 # Create Customer
 
 def create_customer(db: Session, name: str, email: str, phone_number: str, address: str):
